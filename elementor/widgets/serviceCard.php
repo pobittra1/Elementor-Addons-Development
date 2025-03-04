@@ -257,7 +257,7 @@ class Elementor_service_Widget extends \Elementor\Widget_Base
             [
                 'label' => esc_html__('Box Width', 'textdomain'),
                 'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
+                'size_units' => ['px', '%', 'em', 'rem'],
                 'range' => [
                     'px' => [
                         'min' => 100,
@@ -266,6 +266,14 @@ class Elementor_service_Widget extends \Elementor\Widget_Base
                     '%' => [
                         'min' => 10,
                         'max' => 100,
+                    ],
+                    'em' => [
+                        'min' => 1,
+                        'max' => 75,
+                    ],
+                    'rem' => [
+                        'min' => 1,
+                        'max' => 75,
                     ],
                 ],
                 'selectors' => [
@@ -279,7 +287,7 @@ class Elementor_service_Widget extends \Elementor\Widget_Base
             [
                 'label' => esc_html__('Box Height', 'textdomain'),
                 'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', 'vh'],
+                'size_units' => ['px', '%', 'em', 'rem', 'vh'],
                 'range' => [
                     'px' => [
                         'min' => 100,
@@ -288,6 +296,14 @@ class Elementor_service_Widget extends \Elementor\Widget_Base
                     'vh' => [
                         'min' => 10,
                         'max' => 100,
+                    ],
+                    'em' => [
+                        'min' => 1,
+                        'max' => 50,
+                    ],
+                    'rem' => [
+                        'min' => 1,
+                        'max' => 50,
                     ],
                 ],
                 'selectors' => [
