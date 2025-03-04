@@ -184,18 +184,134 @@ class Elementor_service_Widget extends \Elementor\Widget_Base
         );
 
         $this->end_controls_section();
+
+        $this->start_controls_section(
+            'style_section',
+            [
+                'label' => esc_html__('Style', 'textdomain'),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'title_color',
+            [
+                'label' => esc_html__('Title Color', 'textdomain'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .service-title' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'description_color',
+            [
+                'label' => esc_html__('Description Color', 'textdomain'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .service-description' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'background_color',
+            [
+                'label' => esc_html__('Background Color', 'textdomain'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .service-box' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'title_typography',
+                'label' => esc_html__('Title Typography', 'textdomain'),
+                'selector' => '{{WRAPPER}} .service-title',
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'description_typography',
+                'label' => esc_html__('Description Typography', 'textdomain'),
+                'selector' => '{{WRAPPER}} .service-description',
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'box_border',
+                'label' => esc_html__('Box Border', 'textdomain'),
+                'selector' => '{{WRAPPER}} .service-box',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'box_width',
+            [
+                'label' => esc_html__('Box Width', 'textdomain'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', '%'],
+                'range' => [
+                    'px' => [
+                        'min' => 100,
+                        'max' => 1200,
+                    ],
+                    '%' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .service-box' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'box_height',
+            [
+                'label' => esc_html__('Box Height', 'textdomain'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh'],
+                'range' => [
+                    'px' => [
+                        'min' => 100,
+                        'max' => 1000,
+                    ],
+                    'vh' => [
+                        'min' => 10,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .service-box' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     }
 
     protected function render(): void
     {
         $settings = $this->get_settings_for_display();
         $card = $settings['card'];
+        $title_color = $settings['title_color'];
+
 ?>
 
         <section class="services-section">
             <h2>Our Services</h2>
             <div class="services-container">
                 <?php foreach ($card as $item) : ?>
+
                     <div class="service-box">
                         <img src="<?php echo $item['card_img']['url']; ?>" alt="">
                         <div class="service-title"><?php echo esc_html($item['card_title']); ?></div>
@@ -242,10 +358,11 @@ class Elementor_service_Widget extends \Elementor\Widget_Base
             }
 
             .services-container {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                display: flex;
                 gap: 20px;
                 margin-top: 30px;
+                flex-direction: row;
+                flex-wrap: wrap;
             }
 
             .service-box {
